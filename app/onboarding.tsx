@@ -1,4 +1,4 @@
-import { StyleSheet, View, Button } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
 import { theme } from "@/theme";
 import { useUserStore } from "@/store/userStore";
 import { useReducer } from "react";
