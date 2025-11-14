@@ -4,25 +4,23 @@ import {
   TextInput,
   Alert,
   ScrollView,
-  View,
-  TouchableOpacity,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import { theme } from "@/theme";
 import { PlantlyButton } from "@/components/PlantlyButton";
-import React, { useReducer, useState } from "react";
+import { useState } from "react";
 import { PlantlyImage } from "@/components/PlantlyImage";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { usePlantStore } from "@/store/plantsStore";
 import { useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 
 export default function NewScreen() {
-  const [imageUri, setImageUri] = useState<String>();
+  const router = useRouter();
+  const addPlant = usePlantStore((state) => state.addPlant);
   const [name, setName] = useState<string>();
   const [days, setDays] = useState<string>();
-  const addPlant = usePlantStore((state) => state.addPlant);
-  const router = useRouter();
+  const [imageUri, setImageUri] = useState<string>();
 
   const handleSubmit = () => {
     if (!name) {
@@ -43,7 +41,8 @@ export default function NewScreen() {
       );
     }
 
-    addPlant(name, Number(days));
+    addPlant(name, Number(days), imageUri);
+    // The default behaviour of the underlying library has changed. If you are using Expo Router 4+ (which depends on React Navigation 7+), use router.back() here instead. More info: https://reactnavigation.org/docs/upgrading-from-6.x/#the-navigate-method-no-longer-goes-back-use-popto-instead
     router.navigate("/");
   };
 
@@ -53,7 +52,7 @@ export default function NewScreen() {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ["images"],
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -62,20 +61,18 @@ export default function NewScreen() {
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
     }
-
-    console.log(JSON.stringify(result, null, ""));
   };
 
   return (
-    <KeyboardAwareScrollView
+    <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       keyboardShouldPersistTaps="handled"
     >
       <TouchableOpacity
         style={styles.centered}
-        activeOpacity={0.8}
         onPress={handleChooseImage}
+        activeOpacity={0.8}
       >
         <PlantlyImage imageUri={imageUri} />
       </TouchableOpacity>
@@ -96,7 +93,7 @@ export default function NewScreen() {
         keyboardType="number-pad"
       />
       <PlantlyButton title="Add plant" onPress={handleSubmit} />
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 }
 

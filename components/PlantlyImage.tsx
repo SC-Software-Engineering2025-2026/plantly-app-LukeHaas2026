@@ -8,7 +8,7 @@ type Props = {
 export function PlantlyImage({ size, imageUri }: Props) {
   const { width } = useWindowDimensions();
 
-  const imageSize = size ?? Math.min(width / 1.5, 400);
+  const imageSize = size || Math.min(width / 1.5, 400);
 
   return (
     <Image

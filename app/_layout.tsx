@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function Layout() {
+export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen
@@ -9,11 +9,18 @@ export default function Layout() {
       />
       <Stack.Screen
         name="onboarding"
-        options={{ headerShown: false, animation: "fade" }}
+        options={{
+          presentation: "modal",
+          headerShown: false,
+          animation: "fade",
+        }}
       />
       <Stack.Screen
         name="new"
-        options={{ presentation: "modal", title: "New plant" }}
+        options={{
+          presentation: "modal",
+          title: "New plant",
+        }}
       />
     </Stack>
   );

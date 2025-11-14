@@ -8,7 +8,7 @@ type Props = {
 };
 
 export function PlantlyButton({ title, onPress }: Props) {
-  const handlePress = () => {
+  const handlePressed = () => {
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
@@ -16,9 +16,9 @@ export function PlantlyButton({ title, onPress }: Props) {
   };
   return (
     <Pressable
-      onPress={onPress}
-      style={({ pressed }) => {
-        if (pressed) {
+      onPress={handlePressed}
+      style={(state) => {
+        if (state.pressed) {
           return [styles.button, styles.buttonPressed];
         }
         return styles.button;

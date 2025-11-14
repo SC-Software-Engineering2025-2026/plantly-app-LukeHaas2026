@@ -1,7 +1,6 @@
-import { StyleSheet, View, Text, Button } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { theme } from "@/theme";
 import { useUserStore } from "@/store/userStore";
-import { useReducer } from "react";
 import { useRouter } from "expo-router";
 import { PlantlyButton } from "@/components/PlantlyButton";
 import { LinearGradient } from "expo-linear-gradient";
@@ -10,7 +9,7 @@ import { PlantlyImage } from "@/components/PlantlyImage";
 
 export default function OnboardingScreen() {
   const router = useRouter();
-  const toggleHasOnboarded = useUserStore((state) => state.toggleHadOnboarded);
+  const toggleHasOnboarded = useUserStore((state) => state.toggleHasOnboarded);
 
   const handlePress = () => {
     toggleHasOnboarded();
@@ -26,7 +25,9 @@ export default function OnboardingScreen() {
       <StatusBar style="light" />
       <View>
         <Text style={styles.heading}>Plantly</Text>
-        <Text style={styles.tagLine}>Keep your plants healthy and hydra</Text>
+        <Text style={styles.tagline}>
+          Keep your plants healthy and hydrated
+        </Text>
       </View>
       <PlantlyImage />
       <PlantlyButton title="Let me in!" onPress={handlePress} />
@@ -40,7 +41,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     backgroundColor: theme.colorWhite,
-    paddingHorizontal: 8,
+  },
+  text: {
+    fontSize: 24,
   },
   heading: {
     fontSize: 42,
@@ -49,8 +52,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     textAlign: "center",
   },
-  tagLine: {
-    fontSize: 42,
+  tagline: {
+    fontSize: 24,
     color: theme.colorWhite,
     textAlign: "center",
   },
